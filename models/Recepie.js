@@ -13,6 +13,10 @@ const RecepieSchema = mongoose.Schema({
         type: String,
         required: true
     },
+    selected: {
+        type: Number,
+        required: true
+    },
     type: {
         type: String,
         required: true

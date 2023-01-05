@@ -1,4 +1,4 @@
-const express = require('express')
+const express = require('express');
 const router = express.Router();
 const Recepie = require('../models/Recepie')
 
@@ -19,6 +19,7 @@ router.post('/', async (req,res) => {
         title: req.body.title,
         ingredeants: req.body.ingredeants,
         preparation: req.body.preparation,
+        selected: 0,
         type: req.body.type
     });
 
@@ -31,7 +32,7 @@ router.post('/', async (req,res) => {
 });
 
 // Get one post
-router.get('/:postId', async (req,res) => {
+router.get('getone/:postId', async (req,res) => {
     try{
         const post = await Recepie.findById(req.params.postId);
         res.json(post);
@@ -41,7 +42,7 @@ router.get('/:postId', async (req,res) => {
 })
 
 //Delet one Post
-router.delete('/:postId', async (req, res) => {
+router.delete('/delete/:postId', async (req, res) => {
     try{
         const removedPost = await Recepie.remove({ _id: req.params.postId })
     }catch(err){
@@ -66,6 +67,38 @@ router.patch('/description/:postId', async (req,res) => {
         const updatedPost = await Recepie.updateOne(
             { _id: req.params.postId }, 
             {$set: {description: req.body.description}}
+            )
+        res.json(updatedPost);
+    }catch(err){res.status(404).json({message: err})}
+})
+
+//Select a Recepie
+router.get('/select/:recepieId', async (req, res) => {
+    try{
+        const resRecepie = await Recepie.findById(req.params.recepieId);
+        const updatedPost = await Recepie.updateOne(
+            { _id: req.params.recepieId }, 
+            {$set: {selected: resRecepie.selected += 1}}
+            )
+        res.json(updatedPost);
+    }catch(err){res.status(404).json({message: err})}
+})
+
+//Get Recomendations
+router.get('/recomendations', async (req, res) => {
+    try {
+        let recomendations = await Recepie.find({}).sort({"selected": -1}).exec() 
+        res.json(recomendations.slice(0, 3))
+    }catch(err){res.status(400).json({message: err})}
+})
+
+//Deselect a Recepie
+router.get('/deselect/:recepieId', async (req, res) => {
+    try{
+        const resRecepie = await Recepie.findById(req.params.recepieId);
+        const updatedPost = await Recepie.updateOne(
+            { _id: req.params.recepieId }, 
+            {$set: {selected: resRecepie.selected -= 1}}
             )
         res.json(updatedPost);
     }catch(err){res.status(404).json({message: err})}
