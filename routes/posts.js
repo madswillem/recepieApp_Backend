@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Recepie = require('../models/Recepie')
+const cookieParser = require('cookie-parser');
 
 
 //Get all posts
@@ -102,6 +103,21 @@ router.get('/deselect/:recepieId', async (req, res) => {
             )
         res.json(updatedPost);
     }catch(err){res.status(404).json({message: err})}
+})
+
+// Light/Dark Mode selector
+router.get('/colormode/:type', async (req, res) => {
+    if (req.params.type === 'get') {
+        res.send(req.cookies);
+    } else if (req.params.type === 'dark') {
+        res.cookie('type', 'dark');
+        res.send().status(200)
+    } else if (req.params.type === 'light') {
+        res.cookie('type', 'light');
+        res.send().status(200)
+    } else {
+        res.status(400)
+    }
 })
 
 module.exports = router;

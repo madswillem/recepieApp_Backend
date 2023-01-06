@@ -1,11 +1,14 @@
 const express = require('express')
 const mongoose = require('mongoose')
+const cookieParser = require('cookie-parser');
 require('dotenv/config')
 const Recepie = require('./models/Recepie')
 
 const app = express();
 
 app.use(express.json())
+app.use(cookieParser());
+
 app.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*')
     res.header('Access-Control-Allow-Headers', 'Origin, X-Request-With, Content-Type, Accept, Authorization')
