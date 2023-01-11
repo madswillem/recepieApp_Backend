@@ -5,7 +5,7 @@ const RecepieSchema = mongoose.Schema({
         type: String,
         required: true
     },
-    ingredeants:{
+    ingredients:{
         type: Array,
         required: true,
     },
