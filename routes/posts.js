@@ -18,7 +18,7 @@ router.get('/', async (req, res) => {
 router.post('/', async (req,res) => {
     const post = new Recepie({
         title: req.body.title,
-        ingredients: req.body.ingredeants,
+        ingredients: req.body.ingredients,
         preparation: req.body.preparation,
         selected: 0,
         type: req.body.type
