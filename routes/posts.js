@@ -32,7 +32,7 @@ router.post('/', async (req,res) => {
 });
 
 // Get one post
-router.get('getone/:postId', async (req,res) => {
+router.get('/getone/:postId', async (req,res) => {
     try{
         const post = await Recepie.findById(req.params.postId);
         res.json(post);
