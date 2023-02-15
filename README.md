@@ -6,3 +6,6 @@ Routes: \
 /select/:id   -to select a Recipe \
 /deselect/:id -to deselect a Recipe \
 /colormode    -to get/set the colormode(darkmode|lightmode) \
+
+# News
+This Code ist Not longer maintained Go to the Golang Version for Latest updates
